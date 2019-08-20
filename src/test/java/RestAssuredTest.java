@@ -24,7 +24,7 @@ public class RestAssuredTest {
     @Before
     public void postUser() throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
-        String url = "http://localhost:8080/user/addUser";
+        String url = "http://localhost:8090/user/addUser";
         account = new Account("Bob", "password");
         RequestSpecification requestSpecification = given().contentType(ContentType.JSON).body(mapper.writeValueAsBytes(account));
         Response response = requestSpecification.post(url);
@@ -37,7 +37,7 @@ public class RestAssuredTest {
 
     @After
     public void removeUser() {
-        String url = "http://localhost:8080/user/removeUser/Bob";
+        String url = "http://localhost:8090/user/removeUser/Bob";
         RequestSpecification requestSpecification = given().contentType(ContentType.JSON);
         Response response = requestSpecification.delete(url);
         response.prettyPrint();
@@ -49,7 +49,7 @@ public class RestAssuredTest {
     @Test
     public void postAndRemoveBook() throws JsonProcessingException, JSONException {
         ObjectMapper mapper = new ObjectMapper();
-        String url = "http://localhost:8080/Bob/books";
+        String url = "http://localhost:8090/Bob/books";
         Book book = new Book(account, "Anna Karenina", "Leo Tolstoy", "description");
         RequestSpecification requestSpecification = given().contentType(ContentType.JSON).body(mapper.writeValueAsBytes(book));
         Response response = requestSpecification.post(url);
@@ -57,7 +57,7 @@ public class RestAssuredTest {
         response.then()
                 .statusCode(SC_CREATED)
                 .log();
-        url = "http://localhost:8080/Bob/books/removeBook/" + (Integer.parseInt(getLastId()) + 1);
+        url = "http://localhost:8090/Bob/books/removeBook/" + (Integer.parseInt(getLastId()) + 1);
         counter = counter + 2;
         requestSpecification = given().contentType(ContentType.JSON);
         response = requestSpecification.delete(url);
@@ -68,7 +68,7 @@ public class RestAssuredTest {
     }
 
     private String getLastId() throws JSONException {
-        String url = "http://localhost:8080/user/allUsers";
+        String url = "http://localhost:8090/user/allUsers";
         RequestSpecification requestSpecification = given().contentType(ContentType.JSON);
         Response response = requestSpecification.get(url);
         response.prettyPrint();
