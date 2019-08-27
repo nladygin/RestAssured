@@ -29,11 +29,16 @@ public class Book {
         this.author = author;
         this.account = account;
         this.description = description;
-        this.uri = "http://localhost:8080/" + account.username + "/books/" + getId() + "";
+        this.uri = "http://localhost:8090/" + account.username + "/books/";
     }
 
     public Account getAccount() {
         return account;
+    }
+
+    public void changeAccount(Account account){
+        this.account = account;
+        this.uri = "http://localhost:8090/" + account.username + "/books/";
     }
 
     public Long getId() {
